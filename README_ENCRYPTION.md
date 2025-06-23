@@ -100,9 +100,25 @@ python3 encrypt_auth_logs.py
 ### Check the Encrypted Data
 Show the encrypted columns:
 ~~~bash
-docker-compose exec mysql mysql -u root -pyour_password -e "USE ssh_logs; SELECT id, source_ip_encrypted, username_encrypted, status_encrypted FROM auth_logs LIMIT 5;"
+docker-compose exec mysql mysql -u root -pyour_password -e "USE ssh_logs; SELECT id, source_ip_encrypted, username_encrypted, status_encrypted FROM auth_logs LIMIT 10;"
 ~~~
-
+### Expected Output 
+```bash
++----+----------------------------------------------+----------------------------------------------+----------------------------------------------+
+| id | source_ip_encrypted                          | username_encrypted                           | status_encrypted                             |
++----+----------------------------------------------+----------------------------------------------+----------------------------------------------+
+|  1 | TulsCXGYD4sAi2CYPMPsV+LqVhk+2CIbvXRbmGMSaqY= | qfhcGz3yBh5WE2E9jOuhGikiO0YH+Fmv18MRa/VCKrQ= | 20l75uxNr3e8kh01qNNjcTMQv8rozmkOVE/mLz5C4CY= |
+|  2 | NHEZakvhoFWDgd5GgMIcP2ysOc5908jj+HwO1h9g4yE= | cg8q3ig1Ebed2IZGgEx2yOelXGEsALZsgxX/wfPiH0c= | 2ygyMmMYHq6rl521U1buFANnglgq/XQtrYokDFgnGwA= |
+|  3 | k9yIY0QcddltCjLKqzPcDlkNrv/ViDTUq7Cfz5+E/ZE= | V75KWPVTpeeJQTC5T0y87KGPmDhh1NayVB6m2nRUlB8= | K3BxlsllrJdKZOhc0uR3DEAoJbPHBYEYk41cuo8O8SM= |
+|  4 | 1Rw3t2X7PUvbEOaqboP5/Tj2Ivx/xWtXxYwNncXtn28= | 390paMZxRNeIQwg5IrMjTsWZC2U/7UL5lhWcEnSWAes= | p543hT2MJ5M8pEuJmw9YU34m9ruLCjzwT5zbnghAYiQ= |
+|  5 | hHmTpO2uO1pCAs1WHwR38nzFuEtxI+cc46SL+Nnjyrw= | qEStWl1GvmStgPZiEKTfI7yQs6qEgkMtQ42rhJSAE38= | nxMEHb+xljjuxLLffXItngUO3eoe7FNb3sVwaTXI0wY= |
+|  6 | EFCMIR0/FkhNBhUZixBYKstJqjbkgI7f3rn94HNQY/A= | iQS+f5YfxHWrYftqaF2GRKMtVny3Hv/gOjsuI4h4/fA= | 8JLshlohPrs4Bmy3BAvllVDMDR3FmGexOOujgIBf6uU= |
+|  7 | xfJhrqFsc4y2YrjfLBlDzMElsNDxNmjpmV+GDKav+xw= | 2jw762FzbaUZ9A7/RBO8GSjRmnd/5CvhgsnQOyI7bSM= | 0xLh1bUjyXPLWP5Zu/JueVoG+hWG/WV0Dwe4DF76LT4= |
+|  8 | bDDCCf97RWcks6EMWV23XZYcr7ma1Fjba5M0UBY+ots= | 95tWOEhN4o7lCqBOPxJKRvqo9x3ndI1chsUylWRRLkA= | 3IE7dDZffkp4p1hqkBnNzxNxL5wvKF545OgMMyF5AZ4= |
+|  9 | VQaMuk7eIeFGLuxuWhHwReYbyD4hY5WlKhzryDoX6Fg= | M/oCLUl9Qsycg5SoWgRIYXNicTHH0sUBU0sNKUbzk2g= | mrP6WNtzbr36BOX7P4t7x1oRiSUH0n+T4pJcntqa0hU= |
+| 10 | FIWTtDKrr4kkixUQbDbWj+NEDPZcW5/+pFFevYz2XPY= | MYNqiXgmY31lL/ROw8dYTaguR9vQwV5SxXCfhwXu1+8= | 2EPbGXn/41Qc07MOiVAF9ubh6zGXogMQntgmMgeTyfQ= |
++----+----------------------------------------------+----------------------------------------------+----------------------------------------------+
+```
 Show both original and encrypted columns:
 ~~~bash
 docker-compose exec mysql mysql -u root -pyour_password -e "USE ssh_logs; SELECT id, source_ip, source_ip_encrypted, username, username_encrypted, status, status_encrypted FROM auth_logs LIMIT 5;"
@@ -171,11 +187,18 @@ python3 decrypt_auth_logs.py
 
 ### Example Output
 ```
-ID   Decrypted IP         Decrypted Username  Decrypted Status
+ID   Decrypted IP         Decrypted Username Decrypted Status
 ------------------------------------------------------------
-1    221.120.145.21      ubuntu              success
-2    109.213.109.218     user                success
-...
+1    202.111.72.249       admin           success   
+2    57.219.212.112       user            failed    
+3    10.248.76.176        user            failed    
+4    15.132.186.50        jenkins         success   
+5    211.28.82.133        admin           success   
+6    237.129.154.71       system          failed    
+7    250.187.18.111       user            success   
+8    218.253.30.210       jenkins         success   
+9    97.241.24.118        admin           success   
+10   45.194.31.33         ubuntu          success   
 ```
 
 ---
