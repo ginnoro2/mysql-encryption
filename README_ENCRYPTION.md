@@ -17,15 +17,12 @@ Install dependencies if needed:
 pip install pycryptodome mysql-connector-python
 ~~~
 
+Start Container
+```bash
+docker-compose up -d mysql
+docker ps
+```
 ---
-
-## 2. Add Encrypted Columns to `auth_logs`
-
-If you haven't already, add columns to store encrypted data:
-~~~bash
-docker-compose exec mysql mysql -u root -pyour_password -e "USE ssh_logs; ALTER TABLE auth_logs ADD COLUMN source_ip_encrypted TEXT, ADD COLUMN username_encrypted TEXT, ADD COLUMN status_encrypted TEXT;"
-~~~
-
 ---
 
 ## 3. Encrypt Data: `encrypt_auth_logs.py`
